@@ -128,6 +128,8 @@ def grafico_bar():
     canva = FigureCanvasTkAgg(figura, frameMid)
     canva.get_tk_widget().config(bg='black')  
     canva.get_tk_widget().place(x=10, y=70)
+
+
 porcentagem()
 grafico_bar()
 janela.mainloop()
