@@ -1,0 +1,61 @@
+Controle de despesas pessoais com grafico - Linguagem Python
+------------------------------------------------------------------------------------------------
+
+1- Categorias 
+
+Alimentação  | Entretenimento 
+faculdade    | Casa
+investimento | Medicamentos
+
+GRAFICO COM PORCENTAGEM   (FICAR FACIL A VISUALIZAÇÃO,
+                            PARA A PESSOA VER COM QUE 
+                            GASTA MAIS) 
+
+
+2- Renda
+
+VISUALIZAÇÃO DO 
+TOTAL DE RENDA MENSAL
+DESPESAS MENSAIS 
+DINHEIRO QUE AINDA POSSUI EM SUA CONTA
+
+3- Porcentagem da receita gasta no mês 
+
+| ---------------------------| restante    | 78,46 % (do quanto foi gasto do 
+                                                      seu salario no mes)
+
+4- Grafico interativo de colunas 
+
+será feito para o usuario visualizar a renda, despesas e o saldo atual
+|
+|
+|
+|
+|
+|______________________________
+ salario   despesas  saldo atual
+
+5 - Tabela de Receitas e despesas (SERIA BASICAMENTE UM EXTRATO)
+
+Tem como principio fazer com que a pessoa gaste menos ja que sera
+mais facil a visualização de tudo o que ele vai gastar e tudo que vai 
+entrar na conta como dinheiro extra(Alem do salário)
+
+ID  | categoria    |   Data     |   Quantia 
+#1  |   house      |  13/09     |     245,00
+
+
+6- Entrada de gastos e Entrada de dinheiro na conta
+
+Irei inserir um lugar em que a entrada de dinheiro 
+ou até mesmo a saida do mesmo seja feita manualmente
+para freezar na pessoa  a ideia de "Será que esse dinheiro
+                                    gasto foi necessario mesmo"
+
+
+7 - Lugar/botão em que é possivel  inserir uma nova categoria de gasto
+      para se adaptar ao usuário que está fazendo o uso do app
+
+8 -  Um grafico de segmento, que faz a comparação do quanto de 
+dinheiro que sobrou no final dos meses, assim tornando facil a visualização
+da evolução da pessoa 

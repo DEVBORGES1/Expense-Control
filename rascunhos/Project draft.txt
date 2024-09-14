@@ -1,0 +1,62 @@
+Control personal expenses with graph - Python Language
+------------------------------------------------------------------------------------------------
+
+1- Categories
+
+Food | Entertainment 
+college | house
+investment | Medicines
+
+GRAPH WITH PERCENTAGE (MAKES IT EASY TO VIEW,
+                       FOR PEOPLE TO SEE WHAT 
+                       SPEND MORE)
+
+2-Income
+
+VIEWING THE 
+TOTAL MONTHLY INCOME
+MONTHLY EXPENSES 
+MONEY YOU STILL HAVE IN YOUR ACCOUNT
+
+3- Percentage of revenue spent in the month
+| ---------------------------| remaining | 78.46% (of how much was spent on the 
+                                                   your salary for the month)
+
+4- Interactive column chart 
+
+will be made for the user to view income, expenses and current balance
+|
+|
+|
+|
+|
+|_____________________________________
+     salary    expenses     current balance
+
+5- Table of Income and Expenses (WOULD BASICALLY BE AN EXTRACT)
+
+Its principle is to make the person spend less since it will be
+easier to visualize everything he will spend and everything he will 
+enter the account as extra money (in addition to salary)
+
+ID     |  category   |    Date    |   Amount 
+#1     |   house     |   13/09    |    245.00
+
+
+
+6- Entry of expenses and Entry of money into the account
+
+I will insert a place where the money entry 
+or even the output is done manually
+to freeze the person the idea of ​​"Will this money
+                                                           The expense was
+                                                           really necessary"
+
+ 
+7- Place/button where it is possible to insert a new expense category
+      to adapt to the user who is using the app
+
+
+8 - A segment graph, which compares how much 
+   money left over at the end of the months, making 
+   it easy to see  of the evolution of the person
