@@ -131,7 +131,6 @@ def grafico_bar():
     canva.get_tk_widget().config(bg='black')  
     canva.get_tk_widget().place(x=10, y=70)
 
-
 # Criando função de resumo total
 def conta():
     valor = [600,400,100]
@@ -200,7 +199,6 @@ def grafico_pie():
     # Corrige a posição do gráfico e atribui ao frame correto
     canva_categoria = FigureCanvasTkAgg(figura, frame_gra_pie)
     canva_categoria.get_tk_widget().place(x=0, y=0)
-
 
 
 porcentagem()
