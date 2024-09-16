@@ -10,9 +10,9 @@ from PIL import Image, ImageTk  # type: ignore
 from tkinter.ttk import Progressbar
 
 #import matplotlib
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg  # type: ignore
-import matplotlib.pyplot as plt  # type: ignore
-from matplotlib.figure import Figure  # type: ignore
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg 
+import matplotlib.pyplot as plt  
+from matplotlib.figure import Figure  
 
 co0 = "#000000"  #preto
 co1 = "#16191c"  #cinza
@@ -48,6 +48,8 @@ frameMid.grid(row=1, column=0, pady=1, padx=0, sticky=NSEW)
 frameLow = Frame(janela, width=1043, height=300, bg=co0, relief="flat")
 frameLow.grid(row=2, column=0, pady=0, padx=10, sticky=NSEW)
 
+
+
 # working on the top frame
 #accessing the image
 app_img = Image.open('grafico-de-crescimento (1).png')
@@ -59,7 +61,7 @@ app_logo.place(x=0, y=0)
 
 # porcentagem -------------
 def porcentagem():
-    l_nome = Label(frameMid, text="Porcentagem da receita gasta no mês", height=1, anchor=NW, font=('Verdana 12'), bg=co1, fg=co10,)
+    l_nome = Label(frameMid, text="Porcentagem da receita gasta no mês", height=1, anchor=NW, font=('Verdana 12'), bg=co0, fg=co10,)
     l_nome.place(x=7, y=5)
 
 
@@ -74,11 +76,11 @@ def porcentagem():
 
     valor= 50
 
-    l_porcentagem = Label(frameMid, text="{:,.2f}%".format(valor) , anchor=NW, font=('Verdana 12'), bg=co1, fg=co10,)
+    l_porcentagem = Label(frameMid, text="{:,.2f}%".format(valor) , anchor=NW, font=('Verdana 12'), bg=co0, fg=co10,)
     l_porcentagem.place(x=200, y=35)
 
 
-#grafico de colunas]
+#grafico de colunas sobre a renda, gastos e saldo com a def mostrando a variavel lista de valores
 def grafico_bar():
     lista_categorias = ['Renda ', 'Gastos', 'Saldo']
     lista_valores = [3000, 2000, 1000]
@@ -128,6 +130,82 @@ def grafico_bar():
     canva = FigureCanvasTkAgg(figura, frameMid)
     canva.get_tk_widget().config(bg='black')  
     canva.get_tk_widget().place(x=10, y=70)
+
+
+# Criando função de resumo total
+def conta():
+    valor = [600,400,100]
+#1
+    l_linha = Label(frameMid, text="", width=215, height=1, anchor=NW, font=('Arial 1'), bg='#ad1700',  )
+    l_linha.place(x=309, y=52)
+    
+    l_sumario = Label(frameMid, text="Total renda mensal      ".upper(), anchor=NW, font=('Verdana 12'),bg=co0 , fg=co10)
+    l_sumario.place(x=309, y=35)
+
+    l_sumario = Label(frameMid, text="R$ {:,.2f}".format(valor[0]), anchor=NW, font=('Arial 17'),bg=co0 , fg='#ad1700')
+    l_sumario.place(x=309, y=70)
+#final
+    l_linha = Label(frameMid, text="", width=215, height=1, anchor=NW, font=('Arial 1'), bg='#ad1700',  )
+    l_linha.place(x=309, y=132)
+    
+    l_sumario = Label(frameMid, text="Total despesas mensais ".upper(), anchor=NW, font=('Verdana 12'),bg=co0 , fg=co10)
+    l_sumario.place(x=309, y=115)
+
+    l_sumario = Label(frameMid, text="R$ {:,.2f}".format(valor[1]), anchor=NW, font=('Arial 17'),bg=co0 , fg='#ad1700')
+    l_sumario.place(x=309, y=150)
+#2
+    l_linha = Label(frameMid, text="", width=215, height=1, anchor=NW, font=('Arial 1'), bg='#ad1700',  )
+    l_linha.place(x=309, y=207)
+    
+    l_sumario = Label(frameMid, text="Total Saldo Em Conta      ".upper(), anchor=NW, font=('Verdana 12'),bg=co0 , fg=co10)
+    l_sumario.place(x=309, y=190)
+
+    l_sumario = Label(frameMid, text="R$ {:,.2f}".format(valor[2]), anchor=NW, font=('Arial 17'),bg=co0 , fg='#ad1700')
+    l_sumario.place(x=309, y=220)
+#3
+#aqui criei um novo frame para que o grafico de pizza fique na posição correta
+frame_gra_pie = Frame(frameMid, width=580, height=250, bg=co0)
+frame_gra_pie.place(x=415, y=5)
+
+def grafico_pie():
+    
+    figura = plt.Figure(figsize=(5, 3), dpi=90)
+    figura.patch.set_facecolor("black")  # Define o fundo do gráfico como preto
+    ax = figura.add_subplot(111)
+
+    lista_valores = [600, 400, 100]
+    lista_categorias = ['Renda', 'Despesa', 'Saldo']
+
+    explode = [0.05, 0.05, 0.05]  # Explode para todas as categorias igualmente
+
+    # Gráfico de pizza com ajustes de cor e porcentagem branca
+    wedges, texts, autotexts = ax.pie(
+        lista_valores, 
+        explode=explode, 
+        wedgeprops=dict(width=0.2), 
+        autopct='%1.1f%%', 
+        colors=colors, 
+        shadow=True, 
+        startangle=90,
+        textprops={'color': "white"}  # Porcentagens em branco
+    )
+
+    # Ajusta as cores das porcentagens manualmente
+    for autotext in autotexts:
+        autotext.set_color('white')
+
+    # Ajusta a legenda
+    ax.legend(lista_categorias, loc="center right", bbox_to_anchor=(1.55, 0.50))
+
+    # Corrige a posição do gráfico e atribui ao frame correto
+    canva_categoria = FigureCanvasTkAgg(figura, frame_gra_pie)
+    canva_categoria.get_tk_widget().place(x=0, y=0)
+
+
+
 porcentagem()
 grafico_bar()
+conta()
+grafico_pie()
+
 janela.mainloop()
