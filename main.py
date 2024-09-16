@@ -133,7 +133,7 @@ def grafico_bar():
 
 # Criando função de resumo total
 def conta():
-    valor = [600,400,100]
+    valor = [3000, 2000, 1000]
 #1
     l_linha = Label(frameMid, text="", width=215, height=1, anchor=NW, font=('Arial 1'), bg='#ad1700',  )
     l_linha.place(x=309, y=52)
@@ -169,15 +169,15 @@ frame_gra_pie.place(x=415, y=5)
 def grafico_pie():
     
     figura = plt.Figure(figsize=(5, 3), dpi=90)
-    figura.patch.set_facecolor("black")  # Define o fundo do gráfico como preto
+    figura.patch.set_facecolor("black")  # Fundo da figura em preto
     ax = figura.add_subplot(111)
 
-    lista_valores = [600, 400, 100]
+    lista_valores = [3000, 2000, 1000]
     lista_categorias = ['Renda', 'Despesa', 'Saldo']
+    colors = ['#4f81bd', '#c0504d', '#9bbb59']  # Defina as cores desejadas para o gráfico
 
-    explode = [0.05, 0.05, 0.05]  # Explode para todas as categorias igualmente
+    explode = [0.05, 0.05, 0.05] 
 
-    # Gráfico de pizza com ajustes de cor e porcentagem branca
     wedges, texts, autotexts = ax.pie(
         lista_valores, 
         explode=explode, 
@@ -189,13 +189,24 @@ def grafico_pie():
         textprops={'color': "white"}  # Porcentagens em branco
     )
 
-    # Ajusta as cores das porcentagens manualmente
+    # Ajuste de cor manualmente das porcentagens dentro do grafico
     for autotext in autotexts:
         autotext.set_color('white')
 
-    # Ajusta a legenda
-    ax.legend(lista_categorias, loc="center right", bbox_to_anchor=(1.55, 0.50))
+    # Ajusta a legenda com fundo preto e texto branco
+    ax.legend(
+        lista_categorias, 
+        loc="center right", 
+        bbox_to_anchor=(1.55, 0.50), 
+        facecolor='black', 
+        labelcolor='white',
+        edgecolor='#ad1700' 
+    )
 
+    # Remover a grade (sem definir propriedades)
+    ax.yaxis.grid(False)
+
+    
     # Corrige a posição do gráfico e atribui ao frame correto
     canva_categoria = FigureCanvasTkAgg(figura, frame_gra_pie)
     canva_categoria.get_tk_widget().place(x=0, y=0)
