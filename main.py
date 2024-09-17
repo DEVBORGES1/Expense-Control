@@ -14,6 +14,10 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt  
 from matplotlib.figure import Figure  
 
+#import tkcalendar 
+from tkcalendar import Calendar, DateEntry
+from datetime import date
+
 co0 = "#000000"  #preto
 co1 = "#16191c"  #cinza
 co2 = "#ad1700"  #vermelho
@@ -61,7 +65,7 @@ app_logo.place(x=0, y=0)
 
 # porcentagem -------------
 def porcentagem():
-    l_nome = Label(frameMid, text="Porcentagem da receita gasta no mês", height=1, anchor=NW, font=('Verdana 12'), bg=co0, fg=co10,)
+    l_nome = Label(frameMid, text="Porcentagem da receita gasta no mês", height=1, anchor=NW, font=('Verdana 12 bold'), bg=co0, fg=co10,)
     l_nome.place(x=7, y=5)
 
 
@@ -169,12 +173,12 @@ frame_gra_pie.place(x=415, y=5)
 def grafico_pie():
     
     figura = plt.Figure(figsize=(5, 3), dpi=90)
-    figura.patch.set_facecolor("black")  # Fundo da figura em preto
+    figura.patch.set_facecolor("black") 
     ax = figura.add_subplot(111)
 
     lista_valores = [3000, 2000, 1000]
     lista_categorias = ['Renda', 'Despesa', 'Saldo']
-    colors = ['#4f81bd', '#c0504d', '#9bbb59']  # Defina as cores desejadas para o gráfico
+    colors = ['#4f81bd', '#c0504d', '#9bbb59']  
 
     explode = [0.05, 0.05, 0.05] 
 
@@ -186,14 +190,12 @@ def grafico_pie():
         colors=colors, 
         shadow=True, 
         startangle=90,
-        textprops={'color': "white"}  # Porcentagens em branco
+        textprops={'color': "white"} 
     )
 
-    # Ajuste de cor manualmente das porcentagens dentro do grafico
     for autotext in autotexts:
         autotext.set_color('white')
 
-    # Ajusta a legenda com fundo preto e texto branco
     ax.legend(
         lista_categorias, 
         loc="center right", 
@@ -203,18 +205,221 @@ def grafico_pie():
         edgecolor='#ad1700' 
     )
 
-    # Remover a grade (sem definir propriedades)
     ax.yaxis.grid(False)
 
     
-    # Corrige a posição do gráfico e atribui ao frame correto
     canva_categoria = FigureCanvasTkAgg(figura, frame_gra_pie)
     canva_categoria.get_tk_widget().place(x=0, y=0)
+
+
 
 
 porcentagem()
 grafico_bar()
 conta()
 grafico_pie()
+
+#create frames within the frame below
+frame_income = Frame(frameLow, width=300, height=250, bg=co0,)
+frame_income.grid(row=0, column=0)
+
+frame_operations = Frame(frameLow, width=220, height=250, bg=co0,)
+frame_operations.grid(row=0, column=1, pady=5)
+
+frame_settings = Frame(frameLow, width=220, height=250, bg=co0,)
+frame_settings.grid(row=0, column=2, pady=5)
+
+# create table monthly income
+
+app_table = Label( frameMid,text= " Tabela De Faturamento e gastos", anchor=NW, font=('Verdana 12 bold'),bg=co0, fg=co10)
+app_table.place(x=5, y=309)
+
+#create function to show table
+def show_income():
+    tabela_head = ['#Id','Categoria','Data','Quantia']
+
+    lista_itens = [[0,2,3,4],[0,2,3,4],[0,2,3,4],[0,2,3,4]]  # Dados que vão aparecer na tabela
+
+    global tree
+
+    # Estilos da Treeview
+    style = ttk.Style()
+    style.configure("Treeview",
+                    background=co0,  # Fundo das células
+                    foreground=co10,  # Cor do texto das células
+                    rowheight=25,  # Altura das linhas
+                    fieldbackground=co0)  # Fundo da área de visualização
+
+    style.map('Treeview', background=[('selected', co2)])  # Cor de seleção
+    style.configure('Treeview.Heading', background=co1, foreground=co10, font=('Verdana', 10, 'bold'))  # Cabeçalhos
+
+    # Configurar o estilo do Scrollbar
+    style.configure("Vertical.TScrollbar", troughcolor=co0, bordercolor=co0, arrowcolor=co10, background="#ad1700")
+    style.configure("Horizontal.TScrollbar", troughcolor=co0, bordercolor=co0, arrowcolor=co10, background="#ad1700")
+
+    # Função do scroll vertical e horizontal 
+    tree = ttk.Treeview(frame_income, selectmode="extended", columns=tabela_head, show="headings")
+    vsb = ttk.Scrollbar(frame_income, orient="vertical", command=tree.yview, style="Vertical.TScrollbar")
+    hsb = ttk.Scrollbar(frame_income, orient="horizontal", command=tree.xview, style="Horizontal.TScrollbar")
+
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+    tree.grid(column=0, row=0, sticky='nsew')
+    vsb.grid(column=1, row=0, sticky='ns')
+    hsb.grid(column=0, row=1, sticky='ew')
+
+    hd=["center","center","center", "center"]
+    h=[30,100,100,100]
+    n=0
+
+    for col in tabela_head:
+        tree.heading(col, text=col.title(), anchor=CENTER)
+        tree.column(col, width=h[n], anchor=hd[n])
+        n += 1
+
+    for item in lista_itens:
+        tree.insert('', 'end', values=item)
+
+show_income()
+class Janela:
+    def __init__(self, master):
+        self.frame1 = Frame(master, bg='black')
+        self.frame1.place(relx=0.0, rely=0.0, relwidth=1, relheight=1)
+
+        style = ttk.Style()
+
+        # Definindo o tema geral para o estilo
+        style.theme_use('clam')
+
+        # Estilizando a Combobox
+        style.configure("TCombobox", 
+                        fieldbackground="black", 
+                        background="orange", 
+                        foreground="white", 
+                        arrowcolor="white")
+
+        style.configure("Treeview", 
+                        background="black", 
+                        foreground="white", 
+                        rowheight=25, 
+                        fieldbackground="black")
+        
+        style.configure("black.Horizontal.TProgressbar", 
+                        background="#ad1700", 
+                        thickness=25)
+
+        self.cb = ttk.Combobox(self.frame1, values=["OPÇÃO 1", "OPÇÃO 2", "OPÇÃO 3"], style="TCombobox")
+        self.cb.place(relx=0.1, rely=0.1, relwidth=0.25, relheight=0.04)
+
+      
+        self.barra = ttk.Progressbar(self.frame1, 
+                                     style="black.Horizontal.TProgressbar", 
+                                     orient=HORIZONTAL, 
+                                     length=500, 
+                                     mode='determinate')
+        self.barra.place(relx=0.1, rely=0.2, relwidth=0.7, relheight=0.04)
+        self.barra['value'] = 70
+
+      
+        self.tv = ttk.Treeview(self.frame1, columns=('col1', 'col2', 'col3'), show='headings', style="Treeview")
+        self.tv.heading('col1', text="COLUNA 1")
+        self.tv.heading('col2', text="COLUNA 2")
+        self.tv.heading('col3', text="COLUNA 3")
+        self.tv.column('col1', width=100)
+        self.tv.column('col2', width=100)
+        self.tv.column('col3', width=100)
+        self.tv.place(relx=0.1, rely=0.3, relwidth=0.7, relheight=0.3)
+
+
+
+#configurando as despesas
+l_descricao = Label(frame_operations, text='Insirir Novas Despesas', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_descricao.place(x=10, y=10)
+
+#categoria
+l_categoria = Label(frame_operations, text='Categoria:', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_categoria.place(x=10, y=40)
+
+#picking up categories
+categoria_funcao = ['Alimentação','Entretenimento','faculdade']
+categoria = []
+
+for i in categoria_funcao:
+    categoria.append(i[1])
+
+
+combo_categoria_despesas = ttk.Combobox(frame_operations, width=10, font=('Ivy, 10'))
+combo_categoria_despesas['values'] = (categoria)
+combo_categoria_despesas.place(x=110, y=41)
+
+l_descricao = Label(frame_operations, text='Data:', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_descricao.place(x=10, y=70)
+
+e_cal_despesas = DateEntry(frame_operations, 
+                           width=12, 
+                           background='black',         # Fundo preto para os quadrados dos dias
+                           foreground='white',         # Texto das datas em branco
+                           borderwidth=2, 
+                           year=2024,
+                           selectbackground='#ad1700',  # Cor de fundo para o dia selecionado (vermelho)
+                           selectforeground='white',    # Texto do dia selecionado em branco
+                           headersbackground=co0,       # Cor de fundo do cabeçalho (dias da semana)
+                           headersforeground=co10,      # Cor do texto do cabeçalho
+                           normalbackground='black',    # Fundo normal dos dias em preto
+                           normalforeground='white',    # Texto normal dos dias em branco
+                           bordercolor='#ad1700'        # Cor da borda em vermelho
+                          )
+e_cal_despesas.place(x=110, y=71)
+
+# valor
+l_valor_despesas = Label(frame_operations, text='Valor Gasto:', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_valor_despesas.place(x=10, y=100)
+e_valor_despesas = Entry(frame_operations, width=14, justify='left', relief='solid')
+e_valor_despesas.place(x=110, y=101)
+
+
+
+#button insert
+img_add_despesas = Image.open('adicionar.png')
+img_add_despesas = img_add_despesas.resize((17,17))
+img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
+button_inserir_despesas = Button( frame_operations, image=img_add_despesas, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
+button_inserir_despesas.place(x=110, y=131)
+
+
+#button delet
+l_excluir = Label(frame_operations, text='Excluir Ação:', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_excluir.place(x=10, y=190)
+
+img_delete = Image.open('bin.png')
+img_delete = img_delete.resize((17,17))
+img_delete = ImageTk.PhotoImage(img_delete)
+button_deletar = Button( frame_operations, image=img_delete, text= "   Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
+button_deletar.place(x=110, y=190)
+
+
+#configurando rendas
+l_info = Label(frame_settings, text='Insirir Novos Ganhos ', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_info.place(x=10, y=10)
+
+
+l_cal_faturamento = Label(frame_settings, text='Data:', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_cal_faturamento.place(x=10, y=40)
+e_cal_faturamento = DateEntry(frame_settings, 
+                           width=12, 
+                           background='black',         # Fundo preto para os quadrados dos dias
+                           foreground='white',         # Texto das datas em branco
+                           borderwidth=2, 
+                           year=2024,
+                           selectbackground='#ad1700',  # Cor de fundo para o dia selecionado (vermelho)
+                           selectforeground='white',    # Texto do dia selecionado em branco
+                           headersbackground=co0,       # Cor de fundo do cabeçalho (dias da semana)
+                           headersforeground=co10,      # Cor do texto do cabeçalho
+                           normalbackground='black',    # Fundo normal dos dias em preto
+                           normalforeground='white',    # Texto normal dos dias em branco
+                           bordercolor='#ad1700'        # Cor da borda em vermelho
+                          )
+e_cal_faturamento.place(x=110, y=41)
+
 
 janela.mainloop()
