@@ -422,4 +422,30 @@ e_cal_faturamento = DateEntry(frame_settings,
 e_cal_faturamento.place(x=110, y=41)
 
 
+l_valor_faturamento = Label(frame_settings, text='Quantia:', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_valor_faturamento.place(x=10, y=70)
+e_valor_faturamento = Entry(frame_settings, width=14, justify='left', relief='solid')
+e_valor_faturamento.place(x=110, y=71)
+
+#button insert
+img_add_faturamento = Image.open('adicionar.png')
+img_add_faturamento = img_add_faturamento.resize((17,17))
+img_add_faturamento = ImageTk.PhotoImage(img_add_faturamento)
+button_inserir_faturamento = Button( frame_settings, image=img_add_faturamento, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
+button_inserir_faturamento.place(x=110, y=111)
+
+#create new category
+l_info = Label(frame_settings, text='Categoria:', height=1, anchor=NW, font=('Verdana 10 bold'), bg=co0, fg=co10)
+l_info.place(x=10, y=160)
+
+e_categoria = Entry(frame_settings, width=14, justify='left', relief='solid')
+e_categoria.place(x=110, y=160)
+
+img_add_categoria = Image.open('adicionar.png')
+img_add_categoria = img_add_categoria.resize((17,17))
+img_add_categoria = ImageTk.PhotoImage(img_add_categoria)
+button_inserir_categoria = Button( frame_settings, image=img_add_categoria, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
+button_inserir_categoria.place(x=110, y=190)
+
+
 janela.mainloop()
