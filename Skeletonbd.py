@@ -11,7 +11,7 @@ with con:
 # 2- Income
 with con:
     cur = con.cursor()
-    cur.execute("CREATE TABLE Income(id INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT, adicionando_em DATE, valor DECIMAL)")
+    cur.execute("CREATE TABLE Income(id INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT, adicionado_em DATE, valor DECIMAL)")
 
 # 3- expenses
 with con:

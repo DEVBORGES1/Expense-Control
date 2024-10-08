@@ -18,7 +18,7 @@ from matplotlib.figure import Figure
 #import tkcalendar 
 from tkcalendar import Calendar, DateEntry
 from datetime import date
-from Views import  bar_valores, insert_Expenses,view_Categories, insert_categories, insert_Income
+from Views import  bar_valores, insert_Expenses,view_Categories, insert_categories, insert_Income, view_Income, tabela
 
 co0 = "#000000"  #preto
 co1 = "#16191c"  #cinza
@@ -95,6 +95,58 @@ def inserir_categoria_x():
     
 
     combo_categoria_despesas['values'] = (categoria)
+    
+
+
+# aqui irei inserir todas as receitas como na funçao acima
+def inserir_faturamento_y():
+    nome = 'faturamento'
+    data = e_cal_faturamento.get()
+    quantia =  e_valor_faturamento.get()
+
+    lista_inserir = [nome, data, quantia]
+
+    for i in lista_inserir:
+        if i=='':
+            messagebox.showerror('Erro', 'Faltou prencher algum campo')
+            return
+    
+    insert_Income(lista_inserir)
+
+    messagebox.showinfo('Deu boa', 'Os dados foram inseridos com sucesso')
+
+    e_cal_faturamento.delete(0,'end')
+    e_valor_faturamento.delete(0,'end')
+
+def inserir_despesas_z():
+    nome = combo_categoria_despesas.get()
+    data = e_cal_despesas.get()
+    quantia =  e_valor_despesas.get()
+
+    lista_inserir = [nome, data, quantia]
+
+    for i in lista_inserir:
+        if i=='':
+            messagebox.showerror('Deu pau', 'Faltou prencher algum campo')
+            return
+    
+    insert_Expenses(lista_inserir)
+
+    messagebox.showinfo('Deu boa', 'Os dados foram inseridos com sucesso')
+
+    combo_categoria_despesas.delete(0, 'end')
+    e_cal_despesas.delete(0,'end')
+    e_valor_despesas.delete(0,'end')
+
+ #atualizando
+    show_income()
+    porcentagem()
+    grafico_bar()
+    conta()
+    grafico_pie()
+
+
+
 
 
 
@@ -273,7 +325,7 @@ app_table.place(x=5, y=309)
 def show_income():
     tabela_head = ['#Id','Categoria','Data','Quantia']
 
-    lista_itens = [[0,2,3,4],[0,2,3,4],[0,2,3,4],[0,2,3,4]]  # Dados que vão aparecer na tabela
+    lista_itens = tabela()
 
     global tree
 
@@ -376,7 +428,7 @@ l_categoria = Label(frame_operations, text='Categoria:', height=1, anchor=NW, fo
 l_categoria.place(x=10, y=40)
 
 #picking up categories
-categoria_funcao = ['Alimentação','Entretenimento','faculdade']
+categoria_funcao = view_Categories()
 categoria = []
 
 for i in categoria_funcao:
@@ -418,7 +470,7 @@ e_valor_despesas.place(x=110, y=101)
 img_add_despesas = Image.open('adicionar.png')
 img_add_despesas = img_add_despesas.resize((17,17))
 img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
-button_inserir_despesas = Button( frame_operations, image=img_add_despesas, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
+button_inserir_despesas = Button( frame_operations, command=inserir_despesas_z, image=img_add_despesas, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
 button_inserir_despesas.place(x=110, y=131)
 
 
@@ -466,7 +518,7 @@ e_valor_faturamento.place(x=110, y=71)
 img_add_faturamento = Image.open('adicionar.png')
 img_add_faturamento = img_add_faturamento.resize((17,17))
 img_add_faturamento = ImageTk.PhotoImage(img_add_faturamento)
-button_inserir_faturamento = Button( frame_settings, image=img_add_faturamento, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
+button_inserir_faturamento = Button( frame_settings, command=inserir_faturamento_y, image=img_add_faturamento, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
 button_inserir_faturamento.place(x=110, y=111)
 
 #create new category
