@@ -1,86 +1,109 @@
 import sqlite3 as lite
 
-# Conexão com o banco de dados
+# Database connection
 con = lite.connect('DATA.db')
 
-# Função de inserção ---------
+# Insert functions ---------
 
-# Inserir categorias
+# Insert categories
 def insert_categories(i):
     with con:
         cur = con.cursor()
         query = "INSERT INTO Categories (nome) VALUES (?)"
-        cur.execute(query, (i,)) 
+        cur.execute(query, (i)) 
 
-# Inserir receita
+# Insert income
 def insert_Income(i):
     with con:
         cur = con.cursor()
         query = "INSERT INTO Income (categoria, adicionado_em, valor) VALUES (?,?,?)"
         cur.execute(query, i)  
 
-# Inserir despesas
+# Insert expenses
 def insert_Expenses(i):
     with con:
         cur = con.cursor()
         query = "INSERT INTO Expenses (categoria, retirado_em, valor) VALUES (?,?,?)"
         cur.execute(query, i) 
-# Funções de deleção ---------
 
-# Deletar receita
+# Delete functions ---------
+
+# Delete income
 def delete_Income(i):
     with con:
         cur = con.cursor()
         query = "DELETE FROM Income WHERE id=?"  
-        cur.execute(query, (i,))  
+        cur.execute(query, (i))  
 
-# Deletar despesas
+# Delete expenses
 def delete_Expenses(i):
     with con:
         cur = con.cursor()
         query = "DELETE FROM Expenses WHERE id=?"  
-        cur.execute(query, (i,)) 
+        cur.execute(query, (i)) 
 
-# Função para visualizar dados ---------
+# Functions to view data ---------
 
-# Visualizar categorias
+# View categories
 def view_Categories():
     Item_list = []
 
     with con:
         cur = con.cursor()
         cur.execute("SELECT * FROM Categories")
-        linha = cur.fetchall()
-        for l in linha:
-            Item_list.append(l)
+        rows = cur.fetchall()
+        for row in rows:
+            Item_list.append(row)
     
     return Item_list
 
-
-# ver a renda
+# View income
 def view_Income():
     Item_list = []
 
     with con:
         cur = con.cursor()
         cur.execute("SELECT * FROM Income")
-        linha = cur.fetchall()
-        for l in linha:
-            Item_list.append(l)
+        rows = cur.fetchall()
+        for row in rows:
+            Item_list.append(row)
     
     return Item_list
 
-# ver a Expenses
+# View expenses
 def view_Expenses():
     Item_list = []
 
     with con:
         cur = con.cursor()
         cur.execute("SELECT * FROM Expenses")
-        linha = cur.fetchall()
-        for l in linha:
-            Item_list.append(l)
+        rows = cur.fetchall()
+        for row in rows:
+            Item_list.append(row)
     
     return Item_list
 
+# Combine expenses and income
+def tabela():
+    expenses = view_Expenses()
+    income = view_Income()
 
+    tabela_lista = []  
+
+    for item in expenses:
+        tabela_lista.append(item)
+    
+    for item in income:
+        tabela_lista.append(item)
+
+    return tabela_lista 
+
+# Function to return income values for bar chart
+def bar_valores():
+    incomes = view_Income()  
+    income_list = []  
+
+    for item in incomes:
+        income_list.append(item[2])  
+    
+    return income_list

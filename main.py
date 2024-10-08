@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import Tk, ttk
+from tkinter import messagebox
 
 
 #colors
@@ -17,6 +18,7 @@ from matplotlib.figure import Figure
 #import tkcalendar 
 from tkcalendar import Calendar, DateEntry
 from datetime import date
+from Views import  bar_valores, insert_Expenses,view_Categories, insert_categories, insert_Income
 
 co0 = "#000000"  #preto
 co1 = "#16191c"  #cinza
@@ -62,6 +64,39 @@ app_img = ImageTk.PhotoImage(app_img)
 
 app_logo = Label( frameTop, image=app_img, text= " Expense control", width=900, compound=LEFT, padx=5, relief=RAISED, anchor=NW, font=('Verdana 20 bold'), bg=co1, fg=co10,)
 app_logo.place(x=0, y=0)
+
+
+# aqui irei definir a tabela como global com a palavra  tree
+
+global tree
+
+def inserir_categoria_x():
+    nome = e_categoria.get()
+
+    lista_inserir = [nome]
+
+    for i in lista_inserir:
+        if i=='':
+            messagebox.showerror('Erro', 'Faltou prencher algum campo')
+            return
+    
+    insert_categories(lista_inserir)
+
+    messagebox.showinfo('Deu boa', 'Os dados foram inseridos com sucesso')
+
+    e_categoria.delete(0,'end')
+
+    # com essa funçao vai me possibilitar de pegar os valores da categoria
+    categorias_funcoes = view_Categories()
+    categoria = []
+
+    for i in categorias_funcoes:
+        categoria.append(i[1])
+    
+
+    combo_categoria_despesas['values'] = (categoria)
+
+
 
 # porcentagem -------------
 def porcentagem():
@@ -444,7 +479,7 @@ e_categoria.place(x=110, y=160)
 img_add_categoria = Image.open('adicionar.png')
 img_add_categoria = img_add_categoria.resize((17,17))
 img_add_categoria = ImageTk.PhotoImage(img_add_categoria)
-button_inserir_categoria = Button( frame_settings, image=img_add_categoria, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
+button_inserir_categoria = Button( frame_settings, command=inserir_categoria_x, image=img_add_categoria, text= "Adicionar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
 button_inserir_categoria.place(x=110, y=190)
 
 
