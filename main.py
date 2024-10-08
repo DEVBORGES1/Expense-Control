@@ -18,7 +18,7 @@ from matplotlib.figure import Figure
 #import tkcalendar 
 from tkcalendar import Calendar, DateEntry
 from datetime import date
-from Views import  bar_valores, insert_Expenses,view_Categories, insert_categories, insert_Income, view_Income, tabela
+from Views import  bar_valores, insert_Expenses,view_Categories, insert_categories, insert_Income, view_Income, tabela, delete_Expenses, delete_Income
 
 co0 = "#000000"  #preto
 co1 = "#16191c"  #cinza
@@ -146,6 +146,36 @@ def inserir_despesas_z():
     grafico_pie()
 
 
+def deletar_dados():
+    try:
+        treev_dados = tree.focus()
+        treev_dicionario = tree.item(treev_dados)
+        treev_lista = treev_dicionario['values']
+        valor = treev_lista[0]
+        nome = treev_lista[1]
+
+        if nome == 'Faturamento':
+            delete_Income([valor])
+            messagebox.showinfo('Deu boa', 'O dado foi deletado com sucesso')
+
+            show_income()
+            porcentagem()
+            grafico_bar()
+            conta()
+            grafico_pie()
+
+        else:
+                delete_Expenses([valor])
+                messagebox.showinfo('Deu boa', 'O dado foi deletado com sucesso')
+
+                show_income()
+                porcentagem()
+                grafico_bar()
+                conta()
+                grafico_pie()
+        
+    except IndexError:
+        messagebox.showerror('Erro', 'Selecione um dado para deletar')
 
 
 
@@ -481,7 +511,7 @@ l_excluir.place(x=10, y=190)
 img_delete = Image.open('bin.png')
 img_delete = img_delete.resize((17,17))
 img_delete = ImageTk.PhotoImage(img_delete)
-button_deletar = Button( frame_operations, image=img_delete, text= "   Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
+button_deletar = Button( frame_operations, command=deletar_dados, image=img_delete, text= "   Deletar".upper(), width=80, compound=LEFT, anchor=NW, font=('Verdana 7 bold'), bg=co0, fg=co10,overrelief=RIDGE)
 button_deletar.place(x=110, y=190)
 
 
