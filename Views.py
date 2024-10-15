@@ -104,6 +104,20 @@ def bar_valores():
     income_list = []  
 
     for item in incomes:
-        income_list.append(item[2])  
-    
-    return income_list
+        income_list.append(item[3])  
+
+    income_total = sum(income_list)  
+
+    # Total das despesas
+    Expenses = view_Expenses()  
+    expenses_list = []  
+
+    for item in Expenses:
+        expenses_list.append(item[3])  
+
+    expenses_total = sum(expenses_list) 
+
+    # Total na conta (balanço)
+    balance_total = income_total - expenses_total
+
+    return [income_list, expenses_list, expenses_total, balance_total]

@@ -204,7 +204,7 @@ def porcentagem():
 #grafico de colunas sobre a renda, gastos e saldo com a def mostrando a variavel lista de valores
 def grafico_bar():
     lista_categorias = ['Renda ', 'Gastos', 'Saldo']
-    lista_valores = [3000, 2000, 1000]
+    lista_valores = bar_valores()
     
     # Cores que deseja usar nas barras
     colors = ['#ad1700', '#8b008b', '#39ff14']
