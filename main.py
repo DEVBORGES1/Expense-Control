@@ -3,6 +3,7 @@ from tkinter import Tk, ttk
 from tkinter import messagebox
 
 
+
 #colors
 from PIL import Image, ImageTk  # type: ignore
 
@@ -18,7 +19,7 @@ from matplotlib.figure import Figure
 #import tkcalendar 
 from tkcalendar import Calendar, DateEntry
 from datetime import date
-from Views import  bar_valores, insert_Expenses,view_Categories, insert_categories, insert_Income, view_Income, tabela, delete_Expenses, delete_Income
+from Views import  bar_valores, insert_Expenses, pie_valores, view_Categories, insert_categories, insert_Income, view_Income, tabela, delete_Expenses, delete_Income
 
 co0 = "#000000"  #preto
 co1 = "#16191c"  #cinza
@@ -117,6 +118,12 @@ def inserir_faturamento_y():
 
     e_cal_faturamento.delete(0,'end')
     e_valor_faturamento.delete(0,'end')
+    show_income()
+    porcentagem()
+    grafico_bar()
+    conta()
+    grafico_pie()
+
 
 def inserir_despesas_z():
     nome = combo_categoria_despesas.get()
@@ -154,25 +161,23 @@ def deletar_dados():
         valor = treev_lista[0]
         nome = treev_lista[1]
 
-        if nome == 'Faturamento':
+        if nome == 'faturamento':
             delete_Income([valor])
             messagebox.showinfo('Deu boa', 'O dado foi deletado com sucesso')
 
-            show_income()
-            porcentagem()
-            grafico_bar()
-            conta()
-            grafico_pie()
+            
 
         else:
-                delete_Expenses([valor])
-                messagebox.showinfo('Deu boa', 'O dado foi deletado com sucesso')
+            delete_Expenses([valor])
+            messagebox.showinfo('Deu boa', 'O dado foi deletado com sucesso')
 
-                show_income()
-                porcentagem()
-                grafico_bar()
-                conta()
-                grafico_pie()
+        show_income()
+        porcentagem()
+        grafico_bar()
+        conta()
+        grafico_pie()
+
+                
         
     except IndexError:
         messagebox.showerror('Erro', 'Selecione um dado para deletar')
@@ -207,7 +212,7 @@ def grafico_bar():
     lista_valores = bar_valores()
     
     # Cores que deseja usar nas barras
-    colors = ['#ad1700', '#8b008b', '#39ff14']
+    colors = ['#8b008b', '#ad1700', '#39ff14']
 
     figura = plt.Figure(figsize=(4, 3.45), dpi=60)
     ax = figura.add_subplot(111)
@@ -254,7 +259,7 @@ def grafico_bar():
 
 # Criando função de resumo total
 def conta():
-    valor = [3000, 2000, 1000]
+    valor = bar_valores()
 #1
     l_linha = Label(frameMid, text="", width=215, height=1, anchor=NW, font=('Arial 1'), bg='#ad1700',  )
     l_linha.place(x=309, y=52)
@@ -293,11 +298,13 @@ def grafico_pie():
     figura.patch.set_facecolor("black") 
     ax = figura.add_subplot(111)
 
-    lista_valores = [3000, 2000, 1000]
-    lista_categorias = ['Renda', 'Despesa', 'Saldo']
-    colors = ['#4f81bd', '#c0504d', '#9bbb59']  
+    lista_valores = pie_valores()[1]
+    lista_categorias = pie_valores()[0]
+    colors = ['#5588bb', '#66bbbb', '#99bb55', '#ee9944', '#444466', '#bb5555']  
 
-    explode = [0.05, 0.05, 0.05] 
+    explode = [] 
+    for i in lista_categorias:
+        explode.append(0.05)
 
     wedges, texts, autotexts = ax.pie(
         lista_valores, 

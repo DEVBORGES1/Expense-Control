@@ -1,4 +1,5 @@
 import sqlite3 as lite
+import pandas as pd
 
 # Database connection
 con = lite.connect('DATA.db')
@@ -100,24 +101,46 @@ def tabela():
 
 # Function to return income values for bar chart
 def bar_valores():
-    incomes = view_Income()  
-    income_list = []  
+    incomes = view_Income()  # Recupera os valores de renda
+    income_list = []  # Lista para armazenar os valores de renda
 
     for item in incomes:
-        income_list.append(item[3])  
+        income_list.append(item[3])  # Acessa o valor de renda (ajuste conforme sua estrutura)
 
-    income_total = sum(income_list)  
+    income_total = sum(income_list)  # Calcula o total de renda
 
     # Total das despesas
-    Expenses = view_Expenses()  
-    expenses_list = []  
+    expenses = view_Expenses()  # Recupera os valores das despesas
+    expenses_list = []  # Lista para armazenar os valores de despesas
 
-    for item in Expenses:
-        expenses_list.append(item[3])  
+    for item in expenses:
+        expenses_list.append(item[3])  # Acessa o valor da despesa (ajuste conforme sua estrutura)
 
-    expenses_total = sum(expenses_list) 
+    expenses_total = sum(expenses_list)  # Calcula o total de despesas
 
     # Total na conta (balanço)
     balance_total = income_total - expenses_total
 
-    return [income_list, expenses_list, expenses_total, balance_total]
+    # Certifique-se de retornar valores de forma que possam ser usados em um array ou gráfico
+    return [income_total, expenses_total, balance_total]
+
+#arrumando o grafico de pizza
+def pie_valores():
+    Expenses = view_Expenses()
+    Table_list = []
+
+    for i in Expenses:
+        Table_list.append(i)
+
+
+    DataFrame = pd.DataFrame(Table_list, columns = ['Id','Categoria','Data','Quantia'])
+    DataFrame = DataFrame.groupby('Categoria')['Quantia'].sum()
+
+    list_Amount = DataFrame.values.tolist()
+    list_Category = []
+
+    for i in DataFrame.index:
+        list_Category.append(i)
+
+
+    return([list_Category, list_Amount])
