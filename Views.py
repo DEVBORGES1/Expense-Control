@@ -159,7 +159,7 @@ def porcentagem_valores():
     expenses_list = []  # Lista para armazenar os valores de despesas
 
     for item in expenses:
-        expenses_list.append(item[3])  # Acessa o valor da despesa (ajuste conforme sua estrutura)
+        expenses_list.append(float(item[3]))  # Acessa o valor da despesa (ajuste conforme sua estrutura)
 
     expenses_total = sum(expenses_list)  # Calcula o total de despesas
 

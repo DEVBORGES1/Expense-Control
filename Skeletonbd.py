@@ -18,3 +18,5 @@ with con:
     cur = con.cursor()
     cur.execute("CREATE TABLE Expenses(id INTEGER PRIMARY KEY AUTOINCREMENT, categoria TEXT, retirado_em DATE, valor DECIMAL)")
 
+
+
