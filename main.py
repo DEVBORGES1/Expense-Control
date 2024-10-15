@@ -19,7 +19,7 @@ from matplotlib.figure import Figure
 #import tkcalendar 
 from tkcalendar import Calendar, DateEntry
 from datetime import date
-from Views import  bar_valores, insert_Expenses, pie_valores, view_Categories, insert_categories, insert_Income, view_Income, tabela, delete_Expenses, delete_Income
+from Views import  bar_valores, porcentagem_valores, insert_Expenses, pie_valores, view_Categories, insert_categories, insert_Income, view_Income, tabela, delete_Expenses, delete_Income
 
 co0 = "#000000"  #preto
 co1 = "#16191c"  #cinza
@@ -187,7 +187,7 @@ def deletar_dados():
 
 # porcentagem -------------
 def porcentagem():
-    l_nome = Label(frameMid, text="Porcentagem da receita gasta no mês", height=1, anchor=NW, font=('Verdana 12 bold'), bg=co0, fg=co10,)
+    l_nome = Label(frameMid, text="Porcentagem do faturamento", height=1, anchor=NW, font=('Verdana 12 bold'), bg=co0, fg=co10,)
     l_nome.place(x=7, y=5)
 
 
@@ -198,9 +198,9 @@ def porcentagem():
 
     bar = Progressbar(frameMid, length=180, style='black.Horizontal.TProgressbar')
     bar.place(x=10, y=35)
-    bar['value'] = 50
+    bar['value'] = porcentagem_valores()
 
-    valor= 50
+    valor= porcentagem_valores()[0]
 
     l_porcentagem = Label(frameMid, text="{:,.2f}%".format(valor) , anchor=NW, font=('Verdana 12'), bg=co0, fg=co10,)
     l_porcentagem.place(x=200, y=35)

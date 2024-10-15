@@ -144,3 +144,27 @@ def pie_valores():
 
 
     return([list_Category, list_Amount])
+
+def porcentagem_valores():
+    incomes = view_Income()  # Recupera os valores de renda
+    income_list = []  # Lista para armazenar os valores de renda
+
+    for item in incomes:
+        income_list.append(item[3])  # Acessa o valor de renda (ajuste conforme sua estrutura)
+
+    income_total = sum(income_list)  # Calcula o total de renda
+
+    # Total das despesas
+    expenses = view_Expenses()  # Recupera os valores das despesas
+    expenses_list = []  # Lista para armazenar os valores de despesas
+
+    for item in expenses:
+        expenses_list.append(item[3])  # Acessa o valor da despesa (ajuste conforme sua estrutura)
+
+    expenses_total = sum(expenses_list)  # Calcula o total de despesas
+
+    #porcetagem dos gastos
+    total = ((income_total - expenses_total) / income_total) * 100
+
+    # Certifique-se de retornar valores de forma que possam ser usados em um array ou gráfico
+    return [total]
