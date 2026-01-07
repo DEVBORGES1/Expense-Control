@@ -1,0 +1,6 @@
+customtkinter
+matplotlib
+pandas
+pillow
+bcrypt
+packaging
